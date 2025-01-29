@@ -13,3 +13,12 @@ class UserProfile(StatesGroup):
 # Создаем форму класс для логирования выпитой воды
 class WaterLogger(StatesGroup):
     log_water = State()
+
+# Создаем форму класс для логирования еды
+class FoodLogger(StatesGroup):
+    log_food = State()
+
+
+# Создаем форму класс для логирования активности
+class ActivityLogger(StatesGroup):
+    log_activity = State()
