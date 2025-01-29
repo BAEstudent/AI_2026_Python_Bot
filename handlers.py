@@ -290,7 +290,7 @@ async def log_food_data(message: Message, state: FSMContext) -> None:
 async def log_activity(message: Message, state: FSMContext) -> None:
     await state.set_state(ActivityLogger.log_activity)
     await message.answer(
-        "Чтобы залогировать еды, введите съеденный продукт:",
+        "Чтобы залогировать активность в формате '{активность} {минуты активности}':",
         reply_markup=ReplyKeyboardRemove(),
     )
 
@@ -299,11 +299,12 @@ async def log_activity_data(message: Message, state: FSMContext) -> None:
     await state.update_data(log_activity=message.text)
     await state.set_state(state=None)
     data = await state.get_data()
-    data = data.split()
+    activity_data = data['log_activity']
+    activity_data = activity_data.split()
 
     await state.set_state(state=None)
-    activity_type = data[0]
-    activity_minutes = data[1]
+    activity_type = activity_data[0]
+    activity_minutes = int(activity_data[1])
 
     activity_logger.update_activity(activity_type=activity_type, activity_minutes=activity_minutes)
     water_logger.update_water_consumption(water_volume=(-activity_minutes*200))
